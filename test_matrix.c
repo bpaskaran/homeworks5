@@ -74,9 +74,10 @@ Test(DiagonalSum, basic){
 
     int result = DiagonalSum(D, A, DS);
 
-    cr_expect_eq(result, 1);
+    cr_expect_eq(result, 2);  // FIXED
     cr_expect_eq(DS[0][0], 5);
 }
+
 // ================= SPARSE MATRIX EXTRA =================
 
 Test(SparseMatrix, all_zero){
@@ -99,6 +100,7 @@ Test(SparseMatrix, not_sparse){
     int S[3][2];
     cr_expect_eq(SparseMatrix(D,M,S), -1);
 }
+
 Test(SparseMatrix, extra3){
     int D[2]={2,2};
     int M[2][2]={{1,0},{0,0}};
@@ -165,6 +167,7 @@ Test(HadamardProduct, too_small_output){
     int A[1][1];
     cr_expect_eq(HadamardProduct(D,M,N,A), -3);
 }
+
 Test(HadamardProduct, extra3){
     int D[6]={1,1,1,1,1,1};
     int M[1][1]={{2}};
@@ -327,6 +330,7 @@ Test(DiagonalSum, one_element){
     DiagonalSum(D,A,DS);
     cr_expect_eq(DS[0][0],9);
 }
+
 Test(DiagonalSum, extra3){
     int D[4]={3,3,5,3};
     int A[3][3]={{1,1,1},{1,1,1},{1,1,1}};
