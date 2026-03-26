@@ -3,18 +3,20 @@
  * Homework 5 – Pointer Operations
  * CSE 220 – Spring 2026
  *
- * Name:
- * SBU ID:
+ * Name: Brendan Paskaran
+ * SBU ID: 116603319
  */
 
 #include "matrix.h"
 
-// ================= SPARSE MATRIX =================
+// SPARSE MATRIX 
 int SparseMatrix(int D[2], int M[D[0]][D[1]],
                  int S[3][(D[1] > D[0] ? D[1] : D[0])]){
 
     int rows = D[0];
     int cols = D[1];
+
+    // m = largest dimension of matrix
     int m = (rows > cols) ? rows : cols;
 
     // zero S
@@ -26,7 +28,7 @@ int SparseMatrix(int D[2], int M[D[0]][D[1]],
 
     int count = 0;
 
-    // count non-zero
+    // count non zero
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
             if(*(*(M + i) + j) != 0){
@@ -56,7 +58,7 @@ int SparseMatrix(int D[2], int M[D[0]][D[1]],
 }
 
 
-// ================= HADAMARD =================
+// HADAMARD 
 int HadamardProduct(const int D[6],
                     const int M[D[0]][D[1]],
                     const int N[D[2]][D[3]],
@@ -84,20 +86,20 @@ int HadamardProduct(const int D[6],
         }
     }
 
-    // SAME SIZE CASE
+    // same dimensions
     if(mRows == nRows && mCols == nCols){
         if(aRows == mRows && aCols == mCols) return 1;
         if(aRows >= mRows && aCols >= mCols) return 2;
         return -3;
     }
 
-    // DIFFERENT SIZE CASE
+    // different dimensions
     if(aRows >= rLimit && aCols >= cLimit) return -1;
     return -2;
 }
 
 
-// ================= MULTIPLICATION =================
+// MULTIPLICATION 
 int Multiplication(const int D[6],
                    const int M[D[0]][D[1]],
                    const int N[D[2]][D[3]],
@@ -117,7 +119,13 @@ int Multiplication(const int D[6],
     int resultRows = mRows;
     int resultCols = nCols;
 
-    int kLimit = (mCols < nRows) ? mCols : nRows;
+
+    int kLimit = mCols;
+
+    if(nRows < mCols){
+    kLimit = nRows;
+    }
+
 
     // compute
     for(int i = 0; i < resultRows && i < aRows; i++){
@@ -133,20 +141,20 @@ int Multiplication(const int D[6],
         }
     }
 
-    // COMPATIBLE
+    // compatible
     if(mCols == nRows){
         if(aRows == resultRows && aCols == resultCols) return 1;
         if(aRows >= resultRows && aCols >= resultCols) return 2;
         return -3;
     }
 
-    // NOT COMPATIBLE
+    // not compatible
     if(aRows >= resultRows && aCols >= resultCols) return -1;
     return -2;
 }
 
 
-// ================= DIAGONAL SUM =================
+// DIAGONAL SUM 
 int DiagonalSum(const int D[4],
                 const int A[D[0]][D[1]],
                 int DS[D[2]][D[3]]){
@@ -192,11 +200,15 @@ int DiagonalSum(const int D[4],
         *(*(DS + 0) + 1) = antiDiag;
     }
 
-    // MIN REQUIRED SIZE
+    // minimum required size
     int needRows = rows + 2;
-    int needCols = (cols > rows) ? cols : rows;
+
+    int needCols = cols;
+    if(rows > cols){
+    needCols = rows;
+    }
 
     if(dsRows == needRows && dsCols == needCols) return 1;
     if(dsRows >= needRows && dsCols >= needCols) return 2;
     return -1;
-}
+    }
